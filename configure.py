@@ -261,7 +261,8 @@ if __name__ == "__main__":
         for r in compile:
             pandoc = "pandoc -o {name}/{output} {name}/{input} {option}".format(**r, name=name)
             install.append(pandoc)
-                
+            syncl.append("{name}/{output}".format(**r, name=name)) 
+        
         install.append("rsync -arv %s %s"%(" ".join(syncl), dest))
                 
         if name!=dest:
