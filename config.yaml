@@ -1,0 +1,57 @@
+---
+pandoc:
+    packages: # pandoc list of used packages
+        - bracketed_spans
+        - line_blocks
+    kinds: 
+        # the kinds are recognized by file re-extention
+        # for instance filename.letter.md tells pandoc to 
+        # create the document with the appropriate templates file
+        # one can create as many file has we want
+        default: # default is when their is not pre-extention or unricognized 
+                 # extention
+            mdfooters: # footer `.md` files to be added 
+            mdheaders: # header `.md` files to be added
+            outputs:
+                latex:
+                    template:
+                    header:
+                    footer:
+                pdf: 
+                    template:
+                    header:
+                    footer:
+                html:
+                    template:
+                    header:
+                    footer:    
+                    css:
+                        - css/pandoc_elegant.css
+            exemples: 
+                - default.md        
+        custom:            
+            - ext: letter
+              outputs:
+                  latex:
+                      template: templates/letter.tex
+                      header:
+                      footer:
+                  pdf: 
+                      template: templates/letter.tex
+                      header:
+                      footer:                  
+              name: letter
+              description: a nice letter kind of document only for pdf output
+              exemples: 
+                  - my.letter.md
+publish: # a list of destination for publication
+      - name: local # if remote is true a subdirectory with 
+                    # that name will be created
+        url: . # the base url for all img, css, etc, .. 
+               # if local installation put an absolute path  
+        destination: ./local
+        remote: false
+      # - name: mysite
+      #   url: http://mysite.com/md/project1
+      #   destination: user@mysite.com/user/publicdir/project1 # uploaded with rsync
+      #   remote: true
