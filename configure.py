@@ -89,11 +89,11 @@ def config_kind(cmds, kind, d, publish):
     ftrs = ""
     if mdfooters:
         for mf in mdfooters:
-            ftrs += mf+" "
+            ftrs += "{url}/mf ".format(url=publish['url'], mf=mf)
     hdrs = ""
     if mdheaders:
         for mh in mdheaders:
-            hdrs += mh+" "
+            hdrs += "{url}/mh ".format(url=publish['url'], mh=mh)
     
     
     outputs = kind.setdefault('outputs', {}) 
@@ -177,7 +177,7 @@ def config_output(ext, output, d, publish):
     
     if css:
         for c in css:            
-            cmd += "--css %s "%c
+            cmd += "--css {url}/{css} ".format(url=publish['url'], css=c)
     
     if template:
         if publish['remote']:
@@ -188,11 +188,11 @@ def config_output(ext, output, d, publish):
             cmd += "--template=%s "%(os.path.join(publish['url'], template))
     if header:
         for h in header:
-            cmd += "--include-before-body %s "%h
+            cmd += "--include-before-body {url}/{h} ".format(rl=publish['url'], h=h)
         
     if footer:
         for f in footer:
-            cmd += "--include-after-body %s "%f
+            cmd += "--include-after-body {url}/{f} ".format(rl=publish['url'], f=f)
     return cmd, tplguard
         
 if __name__ == "__main__":    
