@@ -14,9 +14,7 @@ syncList = syncDir
 
 # (origin, relative path to the built distribution)
 tplList = [("tpl/Makefile", "Makefile"), 
-           ("tpl/index.md", "index.md"), 
-           ("tpl/exemples/default.md", "default.md"),
-           ("tpl/exemples/my.letter.md", "my.letter.md")]
+           ("tpl/index.md", "index.md")]
 
 compile = [{"input":"index.md", "output":"index.html", "option":"--css css/pandoc_elegent.css"}]
 remove = ["index.md"]
@@ -254,7 +252,17 @@ if __name__ == "__main__":
                 with open(tpldest, "w") as g:
                     g.write(tpl.render(**vars))            
             syncl.append(os.path.join(installDir, sname))    
-                
+        
+        for tplrule in conf.get('templates', []):
+            with open(tplrule['in']) as f:
+                tpl = Template(f.read())
+                tpldest = os.path.join(name, tplrule['out'])
+                with open(tpldest, "w") as g:
+                    g.write(tpl.render(**vars))            
+            syncl.append(os.path.join(installDir, tplrule['out']))
+        
+        
+        
         #copydir(os.path.join(inputRoot, "img"), local)
         #copydir(os.path.join(inputRoot, "md"), local)
         #copydir(os.path.join(inputRoot, "css"), local)
