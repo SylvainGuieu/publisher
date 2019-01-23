@@ -13,7 +13,7 @@ To create a nice standardized markdown document this is quit simple.
 Download this <a href="Makefile">Makefile</a> copy it to the directory where your markdown files 
 are and execute `make`.
     
-    >> curl {{ urlRoot }}/Makefile >> Makefile
+    >> curl {{ urlRoot }}/Makefile > Makefile
     >> make html 
 
 This will create html files for all the `*.md` and `*.pmd` files. `*.pmd` are for [pweave]. The output goes inside the `output` directory, created if needed.

@@ -44,7 +44,15 @@ pandoc:
               description: a nice letter kind of document only for pdf output
               exemples: 
                   - my.letter.md
-publish: # a list of destination for publication
+templates: 
+    -
+        in: tpl/exemples/default.md 
+        out: default.md # relative to the destination
+    -
+        in: tpl/exemples/my.letter.md 
+        out: my.letter.md
+    
+publish: # a list of destination for publication      
       - name: local # if remote is true a subdirectory with 
                     # that name will be created
         url: . # the base url for all img, css, etc, .. 

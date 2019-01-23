@@ -248,28 +248,31 @@ if __name__ == "__main__":
         for fname, sname in tplList:
             with open(fname) as f:
                 tpl = Template(f.read())
-                tpldest = os.path.join(name, sname)
+                tpldest = os.path.join(installDir, sname)
                 with open(tpldest, "w") as g:
-                    g.write(tpl.render(**vars))            
-            syncl.append(os.path.join(installDir, sname))    
+                    g.write(tpl.render(**vars)) 
+            if remote:
+                syncl.append(tpldest)    
         
         for tplrule in conf.get('templates', []):
             with open(tplrule['in']) as f:
                 tpl = Template(f.read())
-                tpldest = os.path.join(name, tplrule['out'])
+                tpldest = os.path.join(installDir, tplrule['out'])
                 with open(tpldest, "w") as g:
-                    g.write(tpl.render(**vars))            
-            syncl.append(os.path.join(installDir, tplrule['out']))
-        
+                    g.write(tpl.render(**vars)) 
+            if remote:
+                syncl.append(tpldest)
+            
         
         
         #copydir(os.path.join(inputRoot, "img"), local)
         #copydir(os.path.join(inputRoot, "md"), local)
         #copydir(os.path.join(inputRoot, "css"), local)
         for r in compile:
-            pandoc = "pandoc -o {name}/{output} {name}/{input} {option}".format(**r, name=name)
+            pandoc = "pandoc -o {installDir}/{output} {installDir}/{input} {option}".format(**r, installDir=installDir)
             install.append(pandoc)
-            syncl.append("{name}/{output}".format(**r, name=name)) 
+            if remote:
+                syncl.append("{installDir}/{output}".format(**r, installDir=installDir)) 
         
         install.append("rsync -arv %s %s"%(" ".join(syncl), dest))
                 
