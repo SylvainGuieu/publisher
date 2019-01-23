@@ -89,11 +89,11 @@ def config_kind(cmds, kind, d, publish):
     ftrs = ""
     if mdfooters:
         for mf in mdfooters:
-            ftrs += "{url}/mf ".format(url=publish['url'], mf=mf)
+            ftrs += "{url}/{mf} ".format(url=publish['url'], mf=mf)
     hdrs = ""
     if mdheaders:
         for mh in mdheaders:
-            hdrs += "{url}/mh ".format(url=publish['url'], mh=mh)
+            hdrs += "{url}/{mh} ".format(url=publish['url'], mh=mh)
     
     
     outputs = kind.setdefault('outputs', {}) 
